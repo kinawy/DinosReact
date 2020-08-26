@@ -8,6 +8,7 @@ class Dinosaur extends Component {
     // Set an initial state prop in your component that contains content or body for posts.
     this.state = {
       body: props.body,
+      tempBody: ''
     };
     // LIKE THIS
     // this.handleBodyEdit = this.handleBodyEdit.bind(this)
@@ -20,9 +21,16 @@ class Dinosaur extends Component {
     console.log(this.state);
     this.setState({ body: enterBody })
     // Take the user inputed value into the alert box and use that return value to update the state of the body or content of your post.
+    // Add a button to somewhere in your page (up to you which component to add to!).
+    // This button should be onClick
   };
-  // Add a button to somewhere in your page (up to you which component to add to!).
-  // This button should be onClick
+
+  handleFormEdit = (e) => {
+    e.preventDefault()
+    this.setState({
+      body: this.state.tempBody
+    })
+  }
 
   render() {
     let allComments = this.props.comments.map((c) => {
@@ -34,9 +42,15 @@ class Dinosaur extends Component {
         <h1>{this.props.title}</h1>
         <h2>{this.props.author}</h2>
         <h3>{this.state.body}</h3>
-        <button onClick={this.handleBodyEdit}>
+        <hr />
+        <form onSubmit={this.handleFormEdit}>
+          <h5>New Body Content</h5>
+          <input type="text" name='body' onChange={e => {this.setState({tempBody: e.target.value})}}/>
+          <input type='submit' />
+        </form>
+        {/* <button onClick={this.handleBodyEdit}>
           Edit the body of this article?
-        </button>
+        </button> */}
         <h4>Comments</h4>
         {allComments}
       </div>
